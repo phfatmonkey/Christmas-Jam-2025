@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class InputController : MonoBehaviour
 {
@@ -11,16 +12,21 @@ public class InputController : MonoBehaviour
 
 
   [SerializeField] private Transform directionArrow;
+  [SerializeField] private TMP_Text uiForceText;
+
+
   private Vector3 maxAngle = new Vector3(0f, 0f, 0f);
   private Vector3 minAngle = new Vector3(0f, 0f, -270f);
 
-  public float force = 500f;
+  private float force = 500f;
+
+  private float forceIncrement = 1f;
 
   
   // Start is called once before the first execution of Update after the MonoBehaviour is created
   void Start()
   {
-      
+    uiForceText.text = force.ToString();
   }
 
   // Update is called once per frame
@@ -33,7 +39,6 @@ public class InputController : MonoBehaviour
       // {
       //   directionArrow.eulerAngles = maxAngle;
       // }
-      Debug.Log(directionArrow.eulerAngles.z);
     }
     if (Input.GetKey(angleDownKey))
     {
@@ -43,7 +48,17 @@ public class InputController : MonoBehaviour
       //   directionArrow.eulerAngles = minAngle;
       // }
 
-      Debug.Log(directionArrow.eulerAngles.z);
+    }
+
+    if (Input.GetKey(forceUpKey))
+    {
+      force += forceIncrement;
+      uiForceText.text = force.ToString();
+    }
+    if (Input.GetKey(forceDownKey))
+    {
+      force -= forceIncrement;
+      uiForceText.text = force.ToString();
     }
 
     if (Input.GetKeyDown(fireKey))
